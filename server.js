@@ -1,6 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+
+// 1. Import BOTH route files
+const authRoutes = require('./routes/auth');
 const studentRoutes = require('./routes/students');
 
 const app = express();
@@ -13,8 +16,9 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected successfully'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
-// Mount student routes
-app.use('/students', studentRoutes);
+// 2. Mount BOTH routes with /api prefixes
+app.use('/api/auth', authRoutes);
+app.use('/api/students', studentRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
